@@ -39,7 +39,7 @@ Rules:
 ## Energetic product films (from a 40 s Three.js product spec, 2026-09)
 
 - **Library music beat the AI scores.** The client called two rounds of generated "brand-style" scores "a bit off". A human-made library track, **edited to picture**, landed well. Mixkit stock music is reachable at `https://assets.mixkit.co/music/<id>/<id>.mp3` (IDs come from the `data-audio-player-preview-url-value` attributes on the tag pages). Check the licence and credit the tracks.
-- **Edit it like a music editor:**
+- **Edit it like a music editor.** The next client rejected the dead stop and the spliced hit as "unnecessary sudden cuts", so prefer back-timing (next section) and use these edits only when a client wants a drop:
   - time-stretch to a tempo where every cut falls on a beat (120 BPM puts cuts at x.0 and x.5);
   - measure the real onset at each cut and stretch ≤0.5 % between cuts (a generic beat-warp locked onto the off-beat);
   - a sparse or filtered intro, with the groove arriving on the hero moment;
@@ -58,3 +58,27 @@ Rules:
   - **A peak cap:** no effect may peak more than about 6 dB over the local music peak (8 dB for a signature hit). Without it, a key-press thock spiked to −2.8 dBFS in a −29 LUFS mix.
   - **Report "body" as well:** the 150 ms in-band RMS lift, verified on the decoded file against a music-only render. The 50 ms peak alone over-reported a 0.15 s thock by 8 dB.
 - **Synthesised thocks were rejected** as "a pitched tom" or not professional. Layered real recordings worked, e.g. a laptop key press plus a soft body punch, about 100 ms long.
+
+## Picture-locked music without edits: back-timing (from a 20 s smart-home spec ad, 2026-10)
+
+The music editor's cut from the section above (a dead stop before the drop, the final hit spliced onto the end card) was rejected on the next film as **"unnecessary sudden cuts"** and "doesn't match". So were two rounds of generated scores timed to the picture ("still not the brand's style"). What the client approved:
+
+1. **Real tracks with a real ending.** Screen a library for tracks near the film's tempo whose ending is a clean button or final hit with a short ring-out. Measure the ending; don't trust the title.
+2. **Back-time each one.** Line the track up so its own final hit lands on the end-card cut (to the frame), then play it **as one continuous piece** from film 0. Nothing is cut, looped or spliced. The film opens mid-track, which is how the brand's own films open. `scripts/backtime-music.py` does it.
+3. **Make the beat match by moving the picture, not the music.** Put every cut on the track's beat grid. At 120 BPM, cuts land on x.0 and x.5 s. Move the end-card cut onto the grid instead of chopping the track to fit an off-grid cut. If the track's tempo is off, varispeed it to the grid (tape-style; ≤ 1.7 %, ≈ 0.3 semitone, is inaudible). If the final hit is an off-beat "push", put the hit on the cut anyway: the other cuts then land on off-beats, which are still on the 8th-note grid.
+4. **Let the client pick by ear.** We can't listen. Offer 5–7 back-timed tracks mixed under the **same** picture, at identical loudness and with the effects re-levelled per track (see below). Name the files by track. The client picked from that set in one pass after five rounds of single proposals.
+5. **Anything driven by the music** (a woofer that pumps to the bass, lights on the beat) must be re-driven from the chosen track. It also needs to know its own start time in the film, so that re-timing the film doesn't break it.
+
+**Loudness.** −30 LUFS was "too loud" for this film, where a previous energetic film was approved at −29/−30. −34 LUFS was approved. Start a new film around −32 and let the music-only render settle it.
+
+**Generated music (ElevenLabs Music).** Composition plans timed to the picture worked mechanically: one take landed its final hit within 150 ms of the end card on the first try. But the client judged four style rounds "not the brand's style". Tips:
+- don't name brands or artists in prompts, or the request is refused;
+- describe the measured grammar instead (tempo, kick pattern, claps on 2 and 4, density, a button ending);
+- respect the plan's concurrency limit (2 parallel requests here; retry 429s after 30–40 s).
+
+## Effects: what a demanding client asked for after "every small move needs a sound" (2026-10)
+
+- **Clean, one family.** For numbers counting and screen state changes, use a single soft UI click family, very subtle: about 0–1 dB in-band, "barely there". A textured "real" sound (a wood rattle for blinds closing) and a swoosh on a reveal were called "random". **Replace a disliked sound with a cleaner one; don't remove it.** The client noticed the removals and asked for them back.
+- **Hero mechanical moves must be heard.** A display tilting or a token landing, the moments the film is about, ended up at **+8–10 dB in-band**. The "peak at or below the local music peak" micro rule had capped them 2–4 dB under the music's peak: "maybe we can't even hear it". Give these events an explicit cap and exempt them from the micro rule.
+- **A feature gets its own signature sound.** For "room-filling spatial audio": a clean sub knock (HP 35 Hz / LP 500 Hz) as the speaker opens, plus a short swell widened in stereo (side ×1.6) that peaks as the title lands. Both are real recordings. The client asked for it, then for "a little less": it settled at about +4.7 dB in-band.
+- **Re-level the effects for each music option.** Caps computed against one track are wrong for another. When an effect lands in a staccato track's micro-gap, its "in-band lift" can read +15–20 dB while its absolute gain is tiny. Check the gain and the 2–8 kHz lift before calling it loud.

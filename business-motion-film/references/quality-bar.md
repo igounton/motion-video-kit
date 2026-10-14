@@ -43,3 +43,14 @@ A cut ships only when all of these hold. Critics check them; scripts measure the
 - "The first image looks too dark."
 - "The music doesn't match."
 - "The sound effects feel unprofessional and jarring."
+- "So much empty space" (a glanceable UI with a dead band between the title and the number).
+- "Start the video with this frame" / "the first scene lingers" (open on the finished hero composition, not a reveal).
+- "Unnecessary sudden cuts" in the music (dead stops and splices), and "too loud" at −30 LUFS.
+- "Maybe we can't even hear it" (the hero's mechanical moves held under the music by a micro-sound cap).
+- "I meant use clean ones instead of random" (a disliked effect should be replaced, not deleted).
+
+## Checks critics missed and clients caught
+- **Text over text mid-crossfade.** Check overlaps on every frame of every crossfade, not only on settled frames.
+- **State labels that contradict the values**, e.g. "Open" while the number counts down.
+- **Glanceable layouts:** no dead bands; each big number centred between its label and its bar; every tile earns its space. Content that echoes the headline (a "Locks" row under "lights, locks, blinds") fills the space with meaning.
+- **The hero moments are audible** on a laptop at normal volume, with the music on.

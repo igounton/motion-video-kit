@@ -17,7 +17,7 @@ Read only the reference file your current step needs:
 | A 3D product hero that must move like the real thing (unfolds, closes, reveals) | `references/product-hero-realism.md` |
 | Any review round | `references/gauntlet.md`, `references/critic-prompts.md`, `references/quality-bar.md` |
 | Music, sound effects, mix | `references/audio.md` |
-| A worked example end to end | `references/case-study-alder.md` (calm service film), `references/case-study-duo.md` (Three.js product film) |
+| A worked example end to end | `references/case-study-alder.md` (calm service film), `references/case-study-duo.md` (Three.js product film), `references/case-study-home-display.md` (what a client changed after the critics said SHIP) |
 
 ## Non-negotiables
 
@@ -59,12 +59,14 @@ One root timeline; each scene is a sub-composition; Three.js scenes are rendered
 Render the whole film. Run `scripts/frozen-time.sh` and `scripts/loudness.sh`. Send to a fresh critic with `references/critic-prompts.md` (full-film prompt). Fix the highest-impact items, re-render, and send to a *new* critic that verifies the previous list item by item. Stop at the quality bar or when gains become cosmetic (usually 3–5 rounds).
 
 ### 8. Audio last, but not an afterthought
-Follow `references/audio.md`: music matched to the buyer's customer and kept well under the effects (lo-fi or warm acoustic for home services); one soft, rumble-free whoosh per real transition; clean UI sounds only on real actions; per-event levels solved in each effect's band (`scripts/solve-sfx-gains.py`); candidates screened with `scripts/sfx-candidates.py`. Always deliver a music-only fallback, and isolate complaints with it.
+Follow `references/audio.md`. For picture-locked music, back-time a real track so its own ending lands on the end card and it plays as one continuous piece, with every cut on its beat (`scripts/backtime-music.py`); offer several tracks under the same picture and let the client pick by ear. Keep the music matched to the buyer's customer and well under the effects (lo-fi or warm acoustic for home services); one soft, rumble-free whoosh per real transition; clean UI sounds only on real actions; per-event levels solved in each effect's band (`scripts/solve-sfx-gains.py`); candidates screened with `scripts/sfx-candidates.py`. Always deliver a music-only fallback, and isolate complaints with it. When the client dislikes an effect, replace it with a cleaner one; don't delete it. Make the hero moments audible.
 
 ### 9. Deliver
-Master MP4 (1080p60 for motion work), poster frame, contact sheet, editable source, generation ledger, and a Gauntlet ledger (what each critic found → what changed → measured before/after). State limits honestly: what was measured versus listened to, and sampled versus exhaustive review.
+Master MP4 (1080p60 for motion work), poster frame, contact sheet, editable source, generation ledger, and a Gauntlet ledger (what each critic found → what changed → measured before/after). State limits honestly: what was measured versus listened to, and sampled versus exhaustive review. Give deliverables project-unique names, put each round in its own named folder, and open it for the client. Expect the client's own pass after the critics' SHIP, and turn it around by timestamp (`references/gauntlet.md`).
 
 ## Working style the clients in this playbook expected
 - Plan visibly (storyboard), then build without stopping to ask for approval of every step.
 - Report status in one line when working for a long time.
+- When time is cut, switch to deadline mode (`references/gauntlet.md`): hard stops, integrate, one critic, top fixes, deliver.
+- Never write API keys to files. If a key must be used, let the user run the one command in their own terminal, and suggest rotating any key pasted into a chat.
 - Show the work: contact sheets, measured numbers, critic verdicts.

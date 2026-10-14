@@ -35,6 +35,21 @@ The motion matched early on, but it still read as CG until the screen behaviour 
 - **Fonts:** headless Chrome renders `-apple-system` as Times. Bind the family names with `@font-face` to a local font file that sits next to the CSS (lint rules may reject `../`), and don't redistribute system fonts.
 - **Shared-file edits:** while several builders work in parallel, edit shared files through a `.next.js` copy, run `node --check`, then `mv` it into place. One mid-edit syntax error blanked every canvas.
 - **Stage colour:** measure the stage colour through the capture→encode path. CSS `#f5f5f7` decoded as `#f3f5f5`, so author the stage colour to what should come out.
+- **Blind tests on encoded frames only.** Lossless PNG captures of our stage sat at (245,243,246) while the reference film decoded to (243,243,245): a perfect tell that has nothing to do with realism. Pull your frames from the rendered MP4, run both sets through the same encode, and hide the key.
+
+**More gotchas, from a 20 s spec ad (HyperFrames 0.8, 4K = the 1080 composition at a device pixel ratio of 2):**
+- **Never read `window.devicePixelRatio` per frame.** Inside a 4K render it reads 2 only on frames 0, 30, 60… and 1 in between, while the pixels stay true 4K. Anything sized from it per frame (mesh sharpness, line widths) flickers. Freeze it at load.
+- **Render with `--experimental-fast-capture=false`.** The fast path dropped a WebGL canvas at 4K.
+- **Type under a slow transform steps.** DOM text under a slowly changing CSS transform or font size re-rasterises in visible one-frame steps (≈ 10 steps in 2 s at a 12 %/s push). Draw each line on a 2× canvas: one `fillText` of the whole line, with each word revealed through a clip so the per-word rise keeps the natural kerning. Keep the DOM line at opacity 0 for layout and overlap checks. A transparent fill gets flagged as unpainted text.
+- **Fonts load lazily.** A line laid out before its weight loaded kept the fallback font's metrics. Preload every weight (`document.fonts.load`) before mounting the overlays.
+- **Hidden segments measure 0 px.** Overlays mounted inside `display:none` segments measured zero-width text and overlapped. Lay every segment out (visible but hidden) while the overlays mount, then hide them.
+- **Register readiness early.** Late registration of the render's ready promise captured blank first frames. Do it in a classic `<head>` script, before any module.
+- **`will-change` broke seek determinism.** Remove it.
+- **One NaN, one black frame.** A ripple shader evaluated past its range produced a single black frame that existed in every render for two rounds. Scan every render for single near-black frames.
+- **Hard thresholds on continuous values flash.** A bulb icon switched its ink at `light > 0.3`, and the animation landed at 0.29999999, so the bulb was white for exactly one frame. Make every threshold on a continuous input a crossfade.
+- **Comments can swallow code.** A trailing `//` comment on a long one-line statement swallowed the next uniform definitions. `node --check` passed, and the scene threw at load. Render a frame after every edit to a shared file.
+- **A whole-frame "pop" flag may be intended.** A screen blooming from dark to light and a woofer making a full stroke both tripped the single-frame pop detector. Before you "fix" a flag, look at the frame-to-frame difference over ±5 frames: a ramp (0.25 → 1.08 → 0.36) is motion, while a lone spike is a bug.
+- **Re-time a shot instead of rebuilding it.** Give each segment window a local clock offset, and let a scene remap its own clock (`t → t0 + rate·t`). Opening on a later, finished frame and trimming a lingering first shot were both one-line changes.
 
 ## 6. How the review loop found these
 - The critic that mattered most compared the render against the reference **frame by frame** and wrote a **per-frame CSV**.

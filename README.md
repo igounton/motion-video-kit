@@ -2,12 +2,12 @@
 
 A Claude Code skill (also usable as plain context for any LLM) for making **premium, launch-style commercials for real businesses** with AI-generated footage, code-built motion (HTML/GSAP), selective Three.js, and an independent-critic quality loop.
 
-It packages what was learned from studying 28 professional SaaS launch films and from building two full sample commercials through dozens of rounds of independent critique: a calm service film, and a 40 s Three.js product spec ad for a foldable phone in which every frame is code:
+It packages what was learned from studying 28 professional SaaS launch films and from building three full sample commercials through dozens of rounds of independent critique: a calm service film, a 40 s Three.js product spec ad for a foldable phone in which every frame is code, and a 20 s smart-home display spec ad that a demanding client re-shaped for seven rounds after the critics said ship:
 
 - **The Gauntlet loop:** builder ≠ judge, fresh critics on the actual render, item-by-item verification, and a ledger. Includes ready-to-use critic prompts.
 - **Motion grammar:** six rules and a catalog of 16 reusable mechanisms, plus notes on all 28 reference films (links to the originals; no footage redistributed).
 - **Quality bar:** measurable checks (frozen time, loudness, contrast, brand colour) and the visual and business criteria clients actually enforce.
-- **Audio rules:** matching music to the buyer's customer, sparse clean sound effects, mix targets.
+- **Audio rules:** matching music to the buyer's customer, back-timing a real track so its own ending lands on the end card (one continuous piece, cuts on its beat), clean sound effects on every small move with the hero moments clearly audible, and mix targets.
 - **Business playbook:** verticals with buying evidence and price anchors, a pilot-offer template, honesty rules.
 - **Three.js patterns:** deterministic, seekable scenes; exploded layers with projected callouts; photos pinned in 3D context; animated option patches; a realism checklist.
 - **Product hero realism:** how to match a real device's motion frame by frame (measured angle keys, a monotone cubic, locked camera), screen continuity and frost, deterministic accumulation motion blur, and lights that reveal the angle without flashing.
@@ -47,7 +47,8 @@ business-motion-film/
     case-study-alder.md         a full worked example (calm service film)
     product-hero-realism.md     making a 3D device move like the real one
     case-study-duo.md           a Three.js product film, round by round
-  scripts/                      frozen-time, loudness, contact-sheet, soften-sfx, sfx-candidates, solve-sfx-gains, offline-mix
+    case-study-home-display.md  what a client changed after the critics said SHIP
+  scripts/                      frozen-time, loudness, contact-sheet, soften-sfx, sfx-candidates, solve-sfx-gains, offline-mix, backtime-music
   templates/                    component-lab.html, projected-overlays.js
 ```
 

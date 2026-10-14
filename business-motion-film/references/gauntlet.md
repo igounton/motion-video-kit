@@ -40,6 +40,17 @@ Adapted from the Gauntlet Loop idea (somethingbig.ai/gauntlet-loop): separate bu
 - Music that faded out before the logo landed, and sound effects that were too loud and harsh.
 - Around 10 of 36 seconds effectively frozen. None of the builder's checks flagged it as a problem.
 
+## Deadline mode
+When the client compresses the schedule (e.g. "we need 1080 and have 1.5 hours"):
+1. Give every in-flight builder a hard stop of 20–25 minutes. They land what works and revert anything half-done.
+2. Integrate, then render at the delivery resolution only.
+3. Run one full-film critic, then its top fixes in parallel.
+4. Run a verify critic and deliver.
+5. List every component whose last round wasn't re-verified in the honest limits.
+
+## SHIP is not the end
+On a 20 s spec ad the critics said SHIP at v2, with 6 of 7 wow windows YES. The client then found nine more things in seven rounds: empty space in a UI face, text over text mid-crossfade, a lying state label, the opening frame, a lingering first shot, music that "doesn't match", and three rounds of effect levels. Critics measure what they're asked to measure. Add those checks to the critic prompts (`quality-bar.md`, "Checks critics missed"). Plan for the client's own pass: deliver versions in a named folder, make each change by timestamp, and turn every round around in minutes.
+
 ## Measured progress example
 
 Frozen time (frame difference below threshold) went from ~10s/36s → 6.5s/31.3s → 1.1s/30.1s → 0.7s/28.6s across four rounds. Loudness range went from 0.6 LU (flat wall of sound) to 3–4 LU.
